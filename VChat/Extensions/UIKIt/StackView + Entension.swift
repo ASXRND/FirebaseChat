@@ -1,0 +1,18 @@
+//
+//  StackView + Entension.swift
+//  VChat
+//
+//  Created by Александр on 27.04.2023.
+//
+
+import UIKit
+
+extension UIStackView {
+    
+    convenience init(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat) {
+        self.init(arrangedSubviews: arrangedSubviews)
+        self.axis = axis
+        self.spacing = spacing
+    }
+    
+}
