@@ -28,7 +28,12 @@ class FirestoreService {
             return
         }
 
-        var muser = MUser(userName: userName!, email: email, avatarStringURL: "not exist", description: description!, sex: sex!, id: id)
+        let muser = MUser(userName: userName!,
+                          email: email,
+                          avatarStringURL: "not exist",
+                          description: description!,
+                          sex: sex!,
+                          id: id)
         self.usersRef.document(muser.id).setData(muser.representation) { error in
             if let error = error {
                 complition(.failure(error))
@@ -37,6 +42,5 @@ class FirestoreService {
             }
         }
     }
-
 }
 
