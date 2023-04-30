@@ -8,7 +8,7 @@
 /*
  The function of checking the filling of fields and validators for Email and Password
 
-*/
+ */
 
 import Foundation
 
@@ -26,13 +26,13 @@ class Validators {
         return true
     }
 
-    static func isFilled(userName: String?, description: String?, sex: String?) -> Bool {
+    static func isFilled(username: String?, description: String?, sex: String?) -> Bool {
         guard let description = description,
               let sex = sex,
-              let userName = userName,
+              let username = username,
               description != "",
               sex != "",
-              userName != "" else {
+              username != "" else {
             return false
         }
         return true
@@ -46,7 +46,7 @@ class Validators {
     }
 
     //MARK: - IsValidPassword
-     func isValidPassword(_ password: String) -> Bool {
+     static func isValidPassword(_ password: String) -> Bool {
         let passwordRegEx = "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,64}"
         let passwordPred = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
         return passwordPred.evaluate(with: password)

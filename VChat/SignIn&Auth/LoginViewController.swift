@@ -43,29 +43,40 @@ class LoginViewController: UIViewController {
     }
 
     @objc private func signInButtonAction() {
+        self.dismiss(animated: true) {
+            self.delegate?.toLoginVC()
+        }
+    }
+
+    @objc private func loginButtonAction() {
         AuthService.shared.login(email: emailTextField.text!, password: passwordTextField.text!) { result in
             switch result {
 
             case .success(let user):
                 self.showAlert(with: "Успешно!", end: "Вы авторизованы") {
-                    self.present(SetupProfileViewController(currentUser: user), animated: true)
+                    FirestoreService.shared.getUserData(user: user) { (result) in
+                        switch result {
+
+                        case .success(let muser):
+                            let mainTabBar = MainTabBarController(currentUser: muser)
+                            mainTabBar.modalPresentationStyle = .fullScreen
+                            self.present(mainTabBar, animated: true)
+                        case .failure(_):
+                            self.present(SetupProfileViewController(currentUser: user), animated: true)
+                        }
+                    }
                 }
 
             case .failure(let error):
                 self.showAlert(with: "Ошибка!", end: error.localizedDescription)
             }
         }
-    }
-
-    @objc private func loginButtonAction() {
-        self.dismiss(animated: true) {
-            self.delegate?.toLoginVC()
-
-    }
-}
 }
 
 
+
+
+}
 // MARK: - Setup constraints
 extension LoginViewController {
     private func setupConstraints() {

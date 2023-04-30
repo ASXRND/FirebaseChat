@@ -143,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				F05C0B7623E088BF0016EE19 /* Model */,
-				1E511F1529D4815900616631 /* AuthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -182,6 +181,7 @@
 			children = (
 				F05C0B7223E088750016EE19 /* MUser.swift */,
 				F05C0B7423E088820016EE19 /* MChat.swift */,
+				1E511F1529D4815900616631 /* AuthService.swift */,
 				1E80149629FAAE9D00DCD8F0 /* FirestoreService.swift */,
 			);
 			path = Model;

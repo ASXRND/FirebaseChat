@@ -15,42 +15,42 @@ final class AuthService {
     private let auth = Auth.auth()
 
 
-    func login(email: String?, password: String?, complition: @escaping (Result<User, Error>) -> Void) {
+    func login(email: String?, password: String?, completion: @escaping (Result<User, Error>) -> Void) {
 
         guard let email = email, let password = password else {
-            complition(.failure(AuthError.notFilled))
+            completion(.failure(AuthError.notFilled))
             return
         }
 
         auth.signIn(withEmail: email, password: password) { result, error in
             guard let result = result else {
-                complition(.failure(error!))
+                completion(.failure(error!))
                 return
             }
-            complition(.success(result.user))
+            completion(.success(result.user))
         }
     }
 
 
-    func register(email: String?, password: String?, confirmPassword: String?, complition: @escaping (Result<User, Error>) -> Void) {
+    func register(email: String?, password: String?, confirmPassword: String?, completion: @escaping (Result<User, Error>) -> Void) {
         guard Validators.isFilled(email: email, password: password, confirmPassword: confirmPassword) else {
-            complition(.failure(AuthError.notFilled))
+            completion(.failure(AuthError.notFilled))
             return
         }
         guard password!.lowercased() == confirmPassword!.lowercased() else {
-            complition(.failure(AuthError.passwordNotMatched))
+            completion(.failure(AuthError.passwordNotMatched))
             return
         }
         guard Validators.isValidEmail(email!) else {
-            complition(.failure(AuthError.invalidEmail))
+            completion(.failure(AuthError.invalidEmail))
             return
         }
         auth.createUser(withEmail: email!, password: password!) { (result, error) in
             guard let result = result else {
-                complition(.failure(error!))
+                completion(.failure(error!))
                 return
             }
-            complition(.success(result.user))
+            completion(.success(result.user))
         }
     }
 }

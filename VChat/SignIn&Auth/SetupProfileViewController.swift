@@ -44,25 +44,28 @@ class SetupProfileViewController: UIViewController {
         goToChatsButton.addTarget(self, action: #selector(goToChatsButtonAction), for: .touchUpInside)
     }
 
+
     @objc private func goToChatsButtonAction() {
         FirestoreService.shared.saveProfileWith(id: currentUser.uid,
                                                 email: currentUser.email!,
-                                                userName: fullNameTextField.text,
+                                                username: fullNameTextField.text,
                                                 avatarImageString: "nil",
                                                 description: aboutMeTextField.text,
                                                 sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex)) { (result) in
             switch result {
 
             case .success(let muser):
-                self.showAlert(with: "Успешно!", end: "Приятного общения")
-                print(muser)
+                self.showAlert(with: "Успешно!", end: "Данные сохранены", completion: {
+                    let mainTabBar = MainTabBarController(currentUser: muser)
+                    mainTabBar.modalPresentationStyle = .fullScreen
+                    self.present(mainTabBar, animated: true)
+
+                })
             case .failure(let error):
                 self.showAlert(with: "Ошибка!", end: error.localizedDescription)
             }
         }
-
     }
-
 }
 
 // MARK: - Setup constraints
