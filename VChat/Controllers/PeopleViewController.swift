@@ -25,6 +25,18 @@ class PeopleViewController: UIViewController {
         }
     }
 
+    private let currentUser: MUser
+
+    init(currentUser: MUser) {
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+        title = currentUser.username
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,7 +54,11 @@ class PeopleViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (_) in
             do {
                 try Auth.auth().signOut()
+
+
                 UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
+
+
             } catch {
                 print("Error signing out: \(error.localizedDescription)")
             }
